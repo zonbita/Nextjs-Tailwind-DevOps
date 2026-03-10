@@ -1,0 +1,38 @@
+image: node:18
+
+stages:
+  - install
+  - build
+  - start
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+
+install_job:
+  stage: install
+  script:
+    - ip a
+    - pwd
+    - cd /home/admin-zon/Desktop/test/zonbitavn-webnextjs
+    - npm ci
+
+build_job:
+  stage: build
+  script:
+    - cd /home/admin-zon/Desktop/test/zonbitavn-webnextjs
+    - npm run build
+
+start_job:
+  stage: start
+  script:
+    - cd /home/admin-zon/Desktop/test/zonbitavn-webnextjs
+    - npm run build
+
+deploy_job:
+  stage: deploy
+  script:
+    - cd /home/admin-zon/Desktop/test/zonbitavn-webnextjs
+    - pm2 stop movie || true
+    - pm2 start npm --name movie -- start
